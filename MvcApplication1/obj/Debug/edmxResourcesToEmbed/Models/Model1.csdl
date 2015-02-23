@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities1" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="addres" EntityType="Model.addre" />
+    <EntitySet Name="ads" EntityType="Model.ad" />
+    <EntitySet Name="messages" EntityType="Model.message" />
+    <EntitySet Name="users" EntityType="Model.user" />
+    <AssociationSet Name="FK_ads_ToTable" Association="Model.FK_ads_ToTable">
+      <End Role="user" EntitySet="users" />
+      <End Role="ads" EntitySet="ads" />
+    </AssociationSet>
+    <AssociationSet Name="FK_messages_ToTable" Association="Model.FK_messages_ToTable">
+      <End Role="user" EntitySet="users" />
+      <End Role="messages" EntitySet="messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user_ToTable" Association="Model.FK_user_ToTable">
+      <End Role="addre" EntitySet="addres" />
+      <End Role="user" EntitySet="users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="addre">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="street" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="city" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="state" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="country" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="users" Relationship="Model.FK_user_ToTable" FromRole="addre" ToRole="user" />
+  </EntityType>
+  <EntityType Name="ad">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="title" />
+      <PropertyRef Name="catagory" />
+      <PropertyRef Name="description" />
+      <PropertyRef Name="activity" />
+      <PropertyRef Name="user" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="catagory" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="image" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="activity" Type="Boolean" Nullable="false" />
+    <Property Name="user" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="user1" Relationship="Model.FK_ads_ToTable" FromRole="ads" ToRole="user" />
+  </EntityType>
+  <EntityType Name="message">
+    <Key>
+      <PropertyRef Name="from" />
+      <PropertyRef Name="message1" />
+      <PropertyRef Name="user" />
+      <PropertyRef Name="deleted" />
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="from" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="message1" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="user" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="user1" Relationship="Model.FK_messages_ToTable" FromRole="messages" ToRole="user" />
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="phone" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="ads" Relationship="Model.FK_ads_ToTable" FromRole="user" ToRole="ads" />
+    <NavigationProperty Name="messages" Relationship="Model.FK_messages_ToTable" FromRole="user" ToRole="messages" />
+    <Property Type="String" Name="password" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="address" />
+    <NavigationProperty Name="addre" Relationship="Model.FK_user_ToTable" FromRole="user" ToRole="addre" />
+  </EntityType>
+  <Association Name="FK_ads_ToTable">
+    <End Role="user" Type="Model.user" Multiplicity="1" />
+    <End Role="ads" Type="Model.ad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="ads">
+        <PropertyRef Name="user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_messages_ToTable">
+    <End Role="user" Type="Model.user" Multiplicity="1" />
+    <End Role="messages" Type="Model.message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="messages">
+        <PropertyRef Name="user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user_ToTable">
+    <End Type="Model.addre" Role="addre" Multiplicity="0..1" />
+    <End Type="Model.user" Role="user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="addre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="user">
+        <PropertyRef Name="address" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

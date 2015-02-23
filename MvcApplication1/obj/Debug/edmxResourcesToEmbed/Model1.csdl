@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Database1Entities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="accounts" EntityType="Database1Model.account" />
+    <EntitySet Name="ads" EntityType="Database1Model.ad" />
+    <EntitySet Name="messages" EntityType="Database1Model.message" />
+    <EntitySet Name="users" EntityType="Database1Model.user" />
+    <AssociationSet Name="FK_user" Association="Database1Model.FK_user">
+      <End Role="account" EntitySet="accounts" />
+      <End Role="user" EntitySet="users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ads" Association="Database1Model.FK_ads">
+      <End Role="user" EntitySet="users" />
+      <End Role="ads" EntitySet="ads" />
+    </AssociationSet>
+    <AssociationSet Name="FK_messages" Association="Database1Model.FK_messages">
+      <End Role="user" EntitySet="users" />
+      <End Role="messages" EntitySet="messages" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="account">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="pass" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="users" Relationship="Database1Model.FK_user" FromRole="account" ToRole="user" />
+  </EntityType>
+  <EntityType Name="ad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="catagory" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="image" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="user" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="user1" Relationship="Database1Model.FK_ads" FromRole="ads" ToRole="user" />
+  </EntityType>
+  <EntityType Name="message">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="from" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="message1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="user" Type="Int32" />
+    <NavigationProperty Name="user1" Relationship="Database1Model.FK_messages" FromRole="messages" ToRole="user" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="phone" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="address" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="username" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="account" Relationship="Database1Model.FK_user" FromRole="user" ToRole="account" />
+    <NavigationProperty Name="ads" Relationship="Database1Model.FK_ads" FromRole="user" ToRole="ads" />
+    <NavigationProperty Name="messages" Relationship="Database1Model.FK_messages" FromRole="user" ToRole="messages" />
+  </EntityType>
+  <Association Name="FK_user">
+    <End Role="account" Type="Database1Model.account" Multiplicity="0..1" />
+    <End Role="user" Type="Database1Model.user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="user">
+        <PropertyRef Name="username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ads">
+    <End Role="user" Type="Database1Model.user" Multiplicity="1" />
+    <End Role="ads" Type="Database1Model.ad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ads">
+        <PropertyRef Name="user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_messages">
+    <End Role="user" Type="Database1Model.user" Multiplicity="0..1" />
+    <End Role="messages" Type="Database1Model.message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="messages">
+        <PropertyRef Name="user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities1">
+    <EntitySetMapping Name="addres">
+      <EntityTypeMapping TypeName="Model.addre">
+        <MappingFragment StoreEntitySet="addres">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="street" ColumnName="street" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="country" ColumnName="country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ads">
+      <EntityTypeMapping TypeName="Model.ad">
+        <MappingFragment StoreEntitySet="ads">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="catagory" ColumnName="catagory" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="activity" ColumnName="activity" />
+          <ScalarProperty Name="user" ColumnName="user" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="messages">
+      <EntityTypeMapping TypeName="Model.message">
+        <MappingFragment StoreEntitySet="messages">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="from" ColumnName="from" />
+          <ScalarProperty Name="message1" ColumnName="message" />
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="Model.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="username" ColumnName="username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

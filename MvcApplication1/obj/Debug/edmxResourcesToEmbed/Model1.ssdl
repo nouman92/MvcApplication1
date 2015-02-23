@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Database1ModelStoreContainer">
+    <EntitySet Name="account" EntityType="Database1Model.Store.account" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ads" EntityType="Database1Model.Store.ads" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="messages" EntityType="Database1Model.Store.messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="user" EntityType="Database1Model.Store.user" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ads" Association="Database1Model.Store.FK_ads">
+      <End Role="user" EntitySet="user" />
+      <End Role="ads" EntitySet="ads" />
+    </AssociationSet>
+    <AssociationSet Name="FK_messages" Association="Database1Model.Store.FK_messages">
+      <End Role="user" EntitySet="user" />
+      <End Role="messages" EntitySet="messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user" Association="Database1Model.Store.FK_user">
+      <End Role="account" EntitySet="account" />
+      <End Role="user" EntitySet="user" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="account">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="username" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="pass" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ads">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="catagory" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="image" Type="image" Nullable="false" />
+    <Property Name="user" Type="int" Nullable="false" />
+    <Property Name="date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="messages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="from" Type="varchar" MaxLength="50" />
+    <Property Name="message" Type="varchar" MaxLength="50" />
+    <Property Name="user" Type="int" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="numeric" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="address" Type="varchar" MaxLength="50" />
+    <Property Name="username" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_ads">
+    <End Role="user" Type="Database1Model.Store.user" Multiplicity="1" />
+    <End Role="ads" Type="Database1Model.Store.ads" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ads">
+        <PropertyRef Name="user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_messages">
+    <End Role="user" Type="Database1Model.Store.user" Multiplicity="0..1" />
+    <End Role="messages" Type="Database1Model.Store.messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="messages">
+        <PropertyRef Name="user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user">
+    <End Role="account" Type="Database1Model.Store.account" Multiplicity="0..1" />
+    <End Role="user" Type="Database1Model.Store.user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="user">
+        <PropertyRef Name="username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
