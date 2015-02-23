@@ -71,7 +71,7 @@ namespace MvcApplication1.Models
         }
         public int edit(string user, string id, string title, string catagory, string description)
         {
-            ad a = db.ads.Find(int.Parse(id))
+            ad a = db.ads.Find(int.Parse(id));
             a.title = title;
             a.catagory = int.Parse(catagory);
             a.description = description;
